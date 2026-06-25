@@ -123,8 +123,15 @@ struct InitCommand: ParsableCommand {
     @Argument(help: "Title of the document")
     var title: String
 
+    @Flag(help: "Replace an existing document file")
+    var force: Bool = false
+
     func run() throws {
-        try makeService().initDocument(file: resolvedFile(file), title: title)
+        let path = resolvedFile(file)
+        if force, FileManager.default.fileExists(atPath: path) {
+            try FileManager.default.removeItem(atPath: path)
+        }
+        try makeService().initDocument(file: path, title: title)
     }
 }
 
@@ -163,14 +170,18 @@ struct ExecCommand: ParsableCommand {
     @Argument(help: "Language / runner (e.g. bash, python3)")
     var language: String
 
-    @Argument(help: "Code to run (reads from stdin when omitted)")
-    var code: String?
+    @Argument(
+        parsing: .remaining,
+        help: "Code to run (remaining words are joined; reads from stdin when omitted)"
+    )
+    var codeParts: [String] = []
 
     func run() throws {
+        let code = codeParts.isEmpty ? readStdin() : codeParts.joined(separator: " ")
         let result = try makeService().execute(
             file: resolvedFile(file),
             language: language,
-            code: code ?? readStdin(),
+            code: code,
             context: resolvedContext(globals: globals)
         )
         printRaw(result.output)
