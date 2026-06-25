@@ -1,0 +1,24 @@
+{
+    "configurations": [
+        {
+            "type": "swift",
+            "request": "launch",
+            "args": [],
+            "cwd": "${workspaceFolder:CodeShow}",
+            "name": "Debug showless",
+            "target": "showless",
+            "configuration": "debug",
+            "preLaunchTask": "swift: Build Debug showless"
+        },
+        {
+            "type": "swift",
+            "request": "launch",
+            "args": [],
+            "cwd": "${workspaceFolder:CodeShow}",
+            "name": "Release showless",
+            "target": "showless",
+            "configuration": "release",
+            "preLaunchTask": "swift: Build Release showless"
+        }
+    ]
+}

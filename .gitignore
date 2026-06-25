@@ -1,0 +1,34 @@
+.DS_Store
+
+# Swift Package Manager
+.build/
+.swiftpm/
+
+# Xcode
+DerivedData/
+*.xcodeproj
+*.xcworkspace
+*.xcuserdata/
+*.xcuserstate
+
+# Local build and release output
+dist/
+showless
+*.dSYM/
+
+# Generated documentation/site output
+docs/_site/
+codewalks/*.html
+
+# Local environment and secrets
+.env
+.env.*
+*.pem
+*.key
+credentials*.json
+service-account*.json
+
+# Logs and temporary files
+*.log
+*.tmp
+*.swp
